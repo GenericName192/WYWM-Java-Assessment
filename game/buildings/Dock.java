@@ -1,4 +1,4 @@
-package buildings;
+package game.buildings;
 
 public class Dock {
     
