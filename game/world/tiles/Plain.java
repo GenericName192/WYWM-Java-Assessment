@@ -4,26 +4,16 @@ import java.util.List;
 
 public class Plain extends Tile {
     public Plain() {
-        super(TerrainType.PLAINS, List.of(BuildingType.FARM, BuildingType.SHOP));
-        this.setTileName("Unnamed plain");
+        super(TerrainType.PLAINS, List.of(BuildingType.FARM, BuildingType.SHOP), "Unnamed plain");
     }
 
     @Override
-    String visitTile() {
-        String tileName = this.getTileName();
-        if (this.getCurrentBuildings().isEmpty()) {
-            return """
-            You stand amidst the open expanse of """
-            + tileName + """
-            , where tall grasses sway in the gentle breeze. \
-            The fertile land is ideal for establishing a farm or setting up a shop \
-            to serve passing travelers and local farmers.
-            """;
-        } else {
-            return """
-            You walk through the vast plains of """ + tileName + """
-            , where tall grasses sway in the gentle breeze. You approach """
-            + this.getRandomBuilding().describe();
-        }
+    protected String baseDescription() {
+        return "A vast open plain with fertile soil, ideal for farming and grazing.";
+    }
+
+    @Override
+    protected String noBuildingFlavor() {
+        return "The plain is quiet, with only the sound of the wind rustling through the grass.";
     }
 }

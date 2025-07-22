@@ -9,26 +9,19 @@ public class Forest extends Tile{
      * Initializes the tile with its terrain type and allowed building types.
      */
     public Forest() {
-        super(TerrainType.FOREST, List.of(BuildingType.LUMBERMILL, BuildingType.SHOP));
-        this.setTileName("Unnamed forest");
+        super(TerrainType.FOREST, List.of(BuildingType.LUMBERMILL, BuildingType.SHOP), "Unnamed forest");
     }
 
+    // Provides a description of the tile when visited.
     @Override
-    String visitTile() {
-        String tileName = this.getTileName();
-        if (this.getCurrentBuildings().isEmpty()) {
-            return """
-            You find yourself in the dense forests of """
-            + tileName + """
-            , the canopy above filtering the sunlight. \
-            The area is rich in resources, making it ideal for a lumbermill to harvest wood. \
-            A shop could also serve those who venture into these woods.
-            """;
-        } else {
-            return """
-            You find yourself in the dense forests of """ + tileName + """
-            , the canopy above filtering the sunlight. You approach """
-            + this.getRandomBuilding().describe();
-        }
+    protected String baseDescription() {
+        return "A dense forest filled with towering trees and rich wildlife.";
     }
+
+    // Provides a description of the tile when there are no buildings present.
+    @Override
+    protected String noBuildingFlavor() {
+        return "The forest is quiet, with only the sounds of nature surrounding you.";
+    }
+
 }

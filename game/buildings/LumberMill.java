@@ -6,7 +6,7 @@ public class LumberMill extends Building {
     }
 
     @Override
-    String visitBuilding() {
+    public String visitBuilding() {
         return "You are at the lumber mill, a place where trees are processed into timber. The air is filled with the sound of saws and the smell of fresh wood.";
     }
 

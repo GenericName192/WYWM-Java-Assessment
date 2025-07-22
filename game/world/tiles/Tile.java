@@ -13,23 +13,29 @@ public abstract class Tile {
     private String tileName;
     private static final Random rand = new Random();
 
-    /**
-     * Abstract method to be implemented by subclasses to describe the tile.
-     * @return A string description of "walking" around the tile.
+        /**
+     * Provides the base description of the tile (unique to each tile type).
      */
-    abstract String visitTile();
+    protected abstract String baseDescription();
+
+    /**
+     * Provides the description shown when there are no buildings on the tile.
+     */
+    protected abstract String noBuildingFlavor();
+
 
     /**
      * Constructor for Tile.
      * @param terrainType The type of terrain for this tile.
      * @param allowedBuildingTypes The list of building types allowed on this tile.
      */
-    public Tile(TerrainType terrainType, List<BuildingType> allowedBuildingTypes) {
+    public Tile(TerrainType terrainType, List<BuildingType> allowedBuildingTypes, String defaultName) {
         if (allowedBuildingTypes == null) {
         throw new IllegalArgumentException("allowedBuildingTypes cannot be null");
     }
         this.terrainType = terrainType;
         this.allowedBuildingTypes = List.copyOf(allowedBuildingTypes);
+        this.tileName = defaultName;
     }
 
     public TerrainType getTerrainType() {
@@ -79,17 +85,18 @@ public abstract class Tile {
     /**
      * Adds a building to the tile.
      * @param building The building to add.
-     * @return true if the building was added, false if not allowed.
+     * @void doesn't return anything
+     * @throws IllegalArgumentException if building is null
      */
-    public boolean addBuilding(Building building) {
+    public void addBuilding(Building building) {
         if (building == null) {
         throw new IllegalArgumentException("Building cannot be null");
         }
         if (allowedBuildingTypes.contains(building.getBuildingType())) {
             currentBuildings.add(building);
-            return true;
+            System.out.println("Building added: " + building.getBuildingType());
         } else {
-            return false;
+            System.out.println("Building not allowed: " + building.getBuildingType() + " on " + terrainType);
         }
     }
 
@@ -97,5 +104,21 @@ public abstract class Tile {
         if (currentBuildings.isEmpty()) return null;
         Building randomBuilding = currentBuildings.get(rand.nextInt(currentBuildings.size()));
         return randomBuilding;
+    }
+
+        public String visitTile() {
+        String tileName = getTileName();
+
+        if (currentBuildings.isEmpty()) {
+            return String.format("""
+                You are at %s. %s
+                %s
+                """, tileName, baseDescription(), noBuildingFlavor());
+        } else {
+            return String.format("""
+                You are at %s. %s
+                You approach %s.
+                """, tileName, baseDescription(), getRandomBuilding().describe());
+        }
     }
 }

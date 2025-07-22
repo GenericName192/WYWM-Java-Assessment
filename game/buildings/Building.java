@@ -14,7 +14,7 @@ public abstract class Building {
      * Abstract method to be implemented by subclasses to describe the building.
      * @return A string description of the building.
      */
-    abstract String visitBuilding();
+    protected abstract String visitBuilding();
 
     /**
      * Constructor for Building.
