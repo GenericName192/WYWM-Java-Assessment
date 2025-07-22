@@ -10,18 +10,19 @@ public class Plain extends Tile {
 
     @Override
     String visitTile() {
+        String tileName = this.getTileName();
         if (this.getCurrentBuildings().isEmpty()) {
             return """
             You stand amidst the open expanse of """
-            + this.getTileName() + """
+            + tileName + """
             , where tall grasses sway in the gentle breeze. \
             The fertile land is ideal for establishing a farm or setting up a shop \
             to serve passing travelers and local farmers.
             """;
         } else {
             return """
-            You walk through the vast plains of """ + this.getTileName() + """
-            , the where tall grasses sway in the gentle breeze. You approach """
+            You walk through the vast plains of """ + tileName + """
+            , where tall grasses sway in the gentle breeze. You approach """
             + this.getRandomBuilding().describe();
         }
     }

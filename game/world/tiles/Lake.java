@@ -11,17 +11,18 @@ public class Lake extends Tile {
 
     @Override
     String visitTile() {
+        String tileName = this.getTileName();
         if (this.getCurrentBuildings().isEmpty()) {
             return """
             You find yourself in the tranquil waters of """
-            + this.getTileName() + """
+            + tileName + """
             , the surface shimmering under the sunlight. \
             The area is perfect for building a dock to facilitate trade or a shop \
             to cater to travelers and fishermen.
             """;
         } else {
             return """
-            You find yourself by the tranquil waters of """ + this.getTileName() + """
+            You find yourself by the tranquil waters of """ + tileName + """
             , gentle waves lapping at the shore. You approach """
             + this.getRandomBuilding().describe();
         }
